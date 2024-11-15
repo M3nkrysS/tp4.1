@@ -8,21 +8,19 @@ from math import pi
 from dataclasses import dataclass
 
 
-def de_vinght():
-    nbr = random.randint(1, 20)
-    return nbr
-
-
 class StringFoo:
-    def set_string(self, message):
-        self.message = message
+    def __init__(self):
+        self.message = "une phrase"
+
+    def set_string(self):
+        self.message = "message"
 
     def print_string(self):
         print(self.message.upper())
 
 
 class Rectangle:
-    def __init__(self, length, width, ):
+    def __init__(self, length, width):
         self.length = length
         self.width = width
 
@@ -47,29 +45,31 @@ class Cercle:
 
 
 class Hero:
-    def __init__(self, nom_hero, pv, force_atk, force_def, vivant):
+    def __init__(self, nom_hero, pv, force_atk, force_def):
         self.nom_hero = nom_hero
         self.pv = pv
         self.force_atk = force_atk
         self.force_def = force_def
-        self.vivant = vivant
 
     def faire_attaque(self):
-        self.attaque = self.force_atk + random.randint(1, 6)
+        attaque = self.force_atk + random.randint(1, 6)
+        return attaque
 
     def recevoir_dommages(self, qte_dommage):
         self.pv -= qte_dommage - self.force_def
 
-    def est_vivant(self, vivant):
-        self.vivant = vivant
+    def est_vivant(self):
         self.vivant = True
         if self.pv <= 0:
             self.vivant = False
         else:
             pass
-
-    def vie(self):
         print(self.vivant)
+
+
+def de_vinght():
+    nbr = random.randint(1, 20)
+    return nbr
 
 
 @dataclass
@@ -82,11 +82,35 @@ class PersonnageDnD:
     charisme: int = de_vinght()
 
 
+class Hero2:
+    def __init__(self, nom_hero, pv, force_atk, force_def, charisme):
+        self.nom_hero = nom_hero
+        self.pv = pv
+        self.force_atk = force_atk
+        self.force_def = force_def
+        self.charisme = PersonnageDnD.charisme
+
+    def faire_attaque(self):
+        attaque = self.force_atk + random.randint(1, 6)
+        return attaque
+
+    def recevoir_dommages(self, qte_dommage):
+        self.pv -= qte_dommage - self.force_def
+
+    def est_vivant(self):
+        self.vivant = True
+        if self.pv <= 0:
+            self.vivant = False
+        else:
+            pass
+        print(self.vivant)
+
+
 ligne = StringFoo()
-ligne.set_string("hello!")
+ligne.set_string()
 ligne.print_string()
 
-r = Rectangle(2, 3)
+r = Rectangle(2, 3, )
 r.calcul_aire()
 r.afficher_infos()
 
@@ -94,7 +118,8 @@ c = Cercle(6)
 c.calcul_aire()
 c.calcul_circonference()
 
-h = Hero("George", random.randint(2, 20), random.randint(1, 6), random.randint(1, 6), True)
-h.vie()
+h = Hero("George", random.randint(2, 20), random.randint(1, 6), random.randint(1, 6))
+h.recevoir_dommages(4)
+h.est_vivant()
+
 p = PersonnageDnD
-print(p.force)
